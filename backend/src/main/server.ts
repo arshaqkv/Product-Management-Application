@@ -2,6 +2,7 @@ import express, { Application, Request, Response } from "express";
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
 import { config } from "../config/config";
+import { connectDB } from "../infrastructure/database/db";
 
 const app: Application = express();
 const PORT = config.PORT;
@@ -20,4 +21,5 @@ app.get("/", (req: Request, res: Response) => {
 //listen port
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
+  connectDB()
 });

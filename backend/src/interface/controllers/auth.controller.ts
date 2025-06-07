@@ -38,6 +38,10 @@ class AuthController {
         secure: config.NODE_ENV === "production",
         sameSite: "strict",
       });
+
+      res
+        .status(HttpStatus.OK)
+        .json({ success: true, message: "Logged out succussfully" });
     } catch (error) {
       next(error);
     }

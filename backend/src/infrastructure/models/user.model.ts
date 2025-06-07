@@ -4,6 +4,7 @@ interface IUser extends Document {
   name: string;
   email: string;
   password: string;
+  _id: string
 }
 
 const UserSchema = new Schema<IUser>(

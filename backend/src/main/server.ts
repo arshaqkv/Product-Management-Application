@@ -5,6 +5,8 @@ import { config } from "../config/config";
 import { connectDB } from "../infrastructure/database/db";
 import { errorHandler } from "../interface/middlewares/error.middleware";
 
+import authRoutes from "../interface/routes/auth.routes";
+
 const app: Application = express();
 const PORT = config.PORT;
 
@@ -19,12 +21,15 @@ app.get("/", (req: Request, res: Response) => {
   res.status(200).json({ message: "API is working" });
 });
 
+//routes
+app.use("/api/auth", authRoutes);
+
 //error handling middleware
-app.use(errorHandler)
+app.use(errorHandler);
 
 //listen port
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
   //connect to Database
-  connectDB()
+  connectDB();
 });

@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { AuthDIContainer } from "../../infrastructure/DI/AuthDIContainer";
 import { HttpStatus } from "../../utils/http.status";
 import { cookieOptions } from "../../utils/cookie.helper";
+import { config } from "../../config/config";
 
 class AuthController {
   async signup(req: Request, res: Response, next: NextFunction) {
@@ -25,6 +26,18 @@ class AuthController {
         .cookie("token", token, cookieOptions)
         .status(HttpStatus.OK)
         .json({ message: "Logged in succussfully", user });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async logout(req: Request, res: Response, next: NextFunction) {
+    try {
+      res.clearCookie("token", {
+        httpOnly: true,
+        secure: config.NODE_ENV === "production",
+        sameSite: "strict",
+      });
     } catch (error) {
       next(error);
     }

@@ -1,6 +1,7 @@
 import express, { Application, Request, Response } from "express";
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
+import cors from "cors";
 import { config } from "../config/config";
 import { connectDB } from "../infrastructure/database/db";
 import { errorHandler } from "../interface/middlewares/error.middleware";
@@ -17,6 +18,16 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(morgan("dev"));
+
+//setup cors
+app.use(
+  cors({
+    origin: config.CORS.CLIENT_URL,
+    allowedHeaders: config.CORS.ALLOWED_HEADERS,
+    methods: config.CORS.ALLOWED_METHODS,
+    credentials: config.CORS.CREDENTIALS,
+  })
+);
 
 //test api
 app.get("/", (req: Request, res: Response) => {

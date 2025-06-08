@@ -11,5 +11,5 @@ export const cookieOptions: ICookieOptions = {
   httpOnly: true,
   secure: config.NODE_ENV === "production",
   sameSite: config.NODE_ENV === "production" ? "none" : "strict",
-  maxAge: 15 * 60 * 1000,
+  maxAge: 1 * 60 * 60 * 1000,
 };

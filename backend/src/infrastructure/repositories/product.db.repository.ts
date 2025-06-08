@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { Product } from "../../domain/entities/product.entity";
 import { IProductRepository } from "../../domain/interfaces/product.repository";
 import { ProductModel } from "../models/product.model";
@@ -36,14 +37,17 @@ export class ProductDbRepository implements IProductRepository {
       query.title = { $regex: search, $options: "i" };
     }
 
-    if (subCategory) {
-      query.subCategory = subCategory;
+    if (subCategory && mongoose.Types.ObjectId.isValid(subCategory)) {
+      query.subCategory = new mongoose.Types.ObjectId(subCategory);
     }
 
     const skip = (page - 1) * limit;
 
     const [products, total] = await Promise.all([
-      ProductModel.find(query).skip(skip).limit(limit),
+      ProductModel.find(query)
+        .populate("subCategory", "name")
+        .skip(skip)
+        .limit(limit),
       ProductModel.countDocuments(query),
     ]);
 

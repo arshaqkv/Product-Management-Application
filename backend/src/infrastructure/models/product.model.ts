@@ -11,7 +11,8 @@ interface IProduct extends Document {
   subCategory: string;
   description: string;
   variants: IVariant[];
-  image: string[];
+  images: string[];
+  _id: string;
 }
 
 const variantSchema = new Schema<IVariant>({
@@ -44,6 +45,7 @@ const productSchema = new Schema<IProduct>(
       type: String,
     },
     variants: [variantSchema],
+    images: [{ type: String }],
   },
   { timestamps: true }
 );

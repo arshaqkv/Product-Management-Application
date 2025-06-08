@@ -10,4 +10,8 @@ export class SubCategoryDbRepository implements ISubCategoryRepository {
   async findSubCategoryByName(name: string): Promise<SubCategory | null> {
     return await SubCategoryModel.findOne({ name });
   }
+
+  async findSubCategoryById(id: string): Promise<SubCategory | null> {
+    return await SubCategoryModel.findById(id);
+  }
 }

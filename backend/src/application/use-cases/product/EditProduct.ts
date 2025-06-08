@@ -1,0 +1,42 @@
+import { Product } from "../../../domain/entities/product.entity";
+import { IProductRepository } from "../../../domain/interfaces/product.repository";
+import { CustomError } from "../../../interface/middlewares/error.middleware";
+import { HttpStatus } from "../../../utils/http.status";
+import fs from "fs";
+import path from "path";
+
+export class EditProduct {
+  constructor(private productRepository: IProductRepository) {}
+
+  async execute(id: string, data: Partial<Product>): Promise<void> {
+    const { title, images } = data;
+    const product = await this.productRepository.findProductById(id);
+
+    if (!product) {
+      throw new CustomError("Product not found", HttpStatus.NOT_FOUND);
+    }
+
+    const isDuplicateProduct = await this.productRepository.findDuplicate(
+      id,
+      title
+    );
+
+    if (isDuplicateProduct) {
+      throw new CustomError(
+        "Another product with this name already exists",
+        HttpStatus.BAD_REQUEST
+      );
+    }
+
+    if (images) {
+      product.images.map((image) => {
+        const filePath = path.join("src/uploads", image);
+        if (fs.existsSync(filePath)) {
+          fs.unlinkSync(filePath);
+        }
+      });
+    }
+
+    await this.productRepository.editProduct(id, data);
+  }
+}

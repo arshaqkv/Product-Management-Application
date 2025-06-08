@@ -14,7 +14,7 @@ export class CreateProduct {
   async execute(data: Product): Promise<void> {
     const { title, subCategory, description, variants, images } = data;
 
-    if (!title || !subCategory || !description || !variants || !images) {
+    if (!title || !subCategory || !description || !variants) {
       deleteUploadedFiles(images);
       throw new CustomError("All fields required", HttpStatus.BAD_REQUEST);
     }

@@ -8,6 +8,7 @@ const router = Router();
 router.use(isAuthenticated);
 
 router.post("/", upload.any(), productController.createProduct);
-router.post("/:id", upload.any(), productController.editProduct);
+router.put("/:id", upload.any(), productController.editProduct);
+router.get("/:id", productController.getProduct);
 
 export default router;

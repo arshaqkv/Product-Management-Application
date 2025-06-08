@@ -41,6 +41,16 @@ class ProductController {
       next(error);
     }
   }
+
+  async getProduct(req: Request, res: Response, next: NextFunction) {
+    const { id } = req.params;
+    try {
+      const product = await ProductDIContainer.getAProductUseCase().execute(id);
+      res.status(HttpStatus.OK).json(product);
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 const productController = new ProductController();

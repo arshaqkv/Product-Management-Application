@@ -1,5 +1,6 @@
 import { CreateProduct } from "../../application/use-cases/product/CreateProduct";
 import { EditProduct } from "../../application/use-cases/product/EditProduct";
+import { GetAProduct } from "../../application/use-cases/product/GetAProduct";
 import { ProductDbRepository } from "../repositories/product.db.repository";
 import { SubCategoryDbRepository } from "../repositories/subCategory.db.repository";
 
@@ -21,5 +22,9 @@ export class ProductDIContainer {
 
   static getEditProductUseCase() {
     return new EditProduct(this.getProductRepository());
+  }
+
+  static getAProductUseCase() {
+    return new GetAProduct(this.getProductRepository());
   }
 }

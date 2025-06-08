@@ -7,6 +7,7 @@ const router = Router();
 
 router.use(isAuthenticated);
 
+router.get("/", productController.getAllProducts);
 router.post("/", upload.any(), productController.createProduct);
 router.put("/:id", upload.any(), productController.editProduct);
 

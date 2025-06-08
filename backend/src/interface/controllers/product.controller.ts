@@ -92,6 +92,26 @@ class ProductController {
       next(error);
     }
   }
+
+  async getAllProducts(req: Request, res: Response, next: NextFunction) {
+    try {
+      const page = parseInt(req.query.page as string) || 1;
+      const limit = parseInt(req.query.limit as string) || 5;
+      const search = req.query.search as string;
+      const subCategory = req.query.subCategory as string;
+
+      const { products, total, totalPages } =
+        await ProductDIContainer.getAllProductsUseCase().execute(
+          page,
+          limit,
+          search,
+          subCategory
+        );
+      res.status(HttpStatus.OK).json({ products, total, totalPages });
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 const productController = new ProductController();

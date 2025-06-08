@@ -12,8 +12,8 @@ export interface LoginDTO {
 export interface LoginResponseDTO {
   token: string;
   user: {
+    _id?: string;
     name: string;
     email: string;
-    password: string;
   };
 }

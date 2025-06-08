@@ -12,6 +12,7 @@ export class Product {
     public subCategory: string,
     public description: string,
     public variants: Variant[],
-    public images: string[]
+    public images: string[],
+    public _id?: string
   ) {}
 }

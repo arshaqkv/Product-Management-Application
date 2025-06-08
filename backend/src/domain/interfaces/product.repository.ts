@@ -6,4 +6,10 @@ export interface IProductRepository {
   findProductById(id: string): Promise<Product | null>;
   editProduct(id: string, data: Partial<Product>): Promise<void>;
   findDuplicate(id: string, title?: string): Promise<boolean>;
+  getAllProducts(
+    page: number,
+    limit: number,
+    search: string,
+    subCategory: string
+  ): Promise<{ products: Product[]; total: number }>;
 }

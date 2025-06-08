@@ -23,4 +23,33 @@ export class ProductDbRepository implements IProductRepository {
     const existing = await ProductModel.findOne({ title, _id: { $ne: id } });
     return !!existing;
   }
+
+  async getAllProducts(
+    page: number,
+    limit: number,
+    search: string,
+    subCategory: string
+  ): Promise<{ products: Product[]; total: number }> {
+    let query: any = {};
+
+    if (search) {
+      query.title = { $regex: search, $options: "i" };
+    }
+
+    if (subCategory) {
+      query.subCategory = subCategory;
+    }
+
+    const skip = (page - 1) * limit;
+
+    const [products, total] = await Promise.all([
+      ProductModel.find(query).skip(skip).limit(limit),
+      ProductModel.countDocuments(query),
+    ]);
+
+    return {
+      products,
+      total,
+    };
+  }
 }

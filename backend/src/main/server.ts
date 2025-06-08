@@ -7,6 +7,7 @@ import { errorHandler } from "../interface/middlewares/error.middleware";
 
 import authRoutes from "../interface/routes/auth.routes";
 import categoryRoutes from "../interface/routes/category.routes";
+import productRoutes from "../interface/routes/product.routes";
 
 const app: Application = express();
 const PORT = config.PORT;
@@ -25,6 +26,7 @@ app.get("/", (req: Request, res: Response) => {
 //routes
 app.use("/api/auth", authRoutes);
 app.use("/api/category", categoryRoutes);
+app.use("/api/product", productRoutes);
 
 //error handling middleware
 app.use(errorHandler);

@@ -12,6 +12,21 @@ class CategoryController {
       next(error);
     }
   }
+
+  async createSubCategory(req: Request, res: Response, next: NextFunction) {
+    const { name, categoryId } = req.body;
+    try {
+      await CategoryDIContainer.getCreateSubCategoryUseCase().execute(
+        name,
+        categoryId
+      );
+      res
+        .status(HttpStatus.CREATED)
+        .json({ message: "New Sub-Category added" });
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 const categoryController = new CategoryController();

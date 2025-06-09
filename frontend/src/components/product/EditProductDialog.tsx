@@ -42,7 +42,7 @@ const EditProductDialog = ({ product, onUpdate }: Props) => {
 
   useEffect(() => {
     const fetchSubCategories = async () => {
-      const result = (await axios.get("/category/all-sub-category")).data;
+      const result = (await axios.get("/category/sub-category")).data;
       setSubcategories(result);
     };
     fetchSubCategories();

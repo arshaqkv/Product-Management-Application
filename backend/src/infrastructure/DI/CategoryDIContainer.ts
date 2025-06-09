@@ -1,6 +1,7 @@
 import { CreateCategory } from "../../application/use-cases/category/CreateCategory";
 import { CreateSubCategory } from "../../application/use-cases/category/CreateSubCategory";
 import { GetCategories } from "../../application/use-cases/category/GetCategories";
+import { GetCategoriesWithSubCategories } from "../../application/use-cases/category/GetCategoryWithSubCategory";
 import { CategoryDbRepository } from "../repositories/category.db.repository";
 import { SubCategoryDbRepository } from "../repositories/subCategory.db.repository";
 
@@ -23,5 +24,9 @@ export class CategoryDIContainer {
 
   static getCategoriesUseCase() {
     return new GetCategories(this.getCategoryRepository());
+  }
+
+  static getCategoriesWithSubCategoriesUseCase() {
+    return new GetCategoriesWithSubCategories(this.getCategoryRepository());
   }
 }

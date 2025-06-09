@@ -1,11 +1,11 @@
 import { ICategoryRepository } from "../../../domain/interfaces/category.repository";
 
-export class GetCategories {
+export class GetCategoriesWithSubCategories {
   constructor(private categoryRepository: ICategoryRepository) {}
 
   async execute(): Promise<any> {
     const categories =
-      await this.categoryRepository.getAllCategories();
+      await this.categoryRepository.getCategoriesWithSubCategories();
 
     return categories;
   }

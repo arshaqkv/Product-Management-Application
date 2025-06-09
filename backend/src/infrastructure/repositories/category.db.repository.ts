@@ -30,4 +30,8 @@ export class CategoryDbRepository implements ICategoryRepository {
     );
     return result;
   }
+
+  async getAllCategories(): Promise<Category[]> {
+    return await CategoryModel.find({});
+  }
 }

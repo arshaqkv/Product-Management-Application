@@ -5,4 +5,5 @@ export interface ICategoryRepository {
   createCategory(category: Category): Promise<void>;
   findCategoryByName(name: string): Promise<Category | null>;
   getCategoriesWithSubCategories(): Promise<any>;
+  getAllCategories(): Promise<Category[]>;
 }

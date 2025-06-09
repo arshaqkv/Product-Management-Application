@@ -47,7 +47,8 @@ export class ProductDbRepository implements IProductRepository {
       ProductModel.find(query)
         .populate("subCategory", "name")
         .skip(skip)
-        .limit(limit),
+        .limit(limit)
+        .sort({ createdAt: -1 }),
       ProductModel.countDocuments(query),
     ]);
 

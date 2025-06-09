@@ -4,6 +4,7 @@ import { GetAllProducts } from "../../application/use-cases/product/GetAllProduc
 import { GetAProduct } from "../../application/use-cases/product/GetAProduct";
 import { ProductDbRepository } from "../repositories/product.db.repository";
 import { SubCategoryDbRepository } from "../repositories/subCategory.db.repository";
+import { WishlistDbRepository } from "../repositories/wishlist.db.repository";
 
 export class ProductDIContainer {
   static getProductRepository() {
@@ -12,6 +13,10 @@ export class ProductDIContainer {
 
   static getSubCategoryRepository() {
     return new SubCategoryDbRepository();
+  }
+
+  static getWishlistRepository() {
+    return new WishlistDbRepository();
   }
 
   static getCreateProductUseCase() {
@@ -26,7 +31,10 @@ export class ProductDIContainer {
   }
 
   static getAProductUseCase() {
-    return new GetAProduct(this.getProductRepository());
+    return new GetAProduct(
+      this.getProductRepository(),
+      this.getWishlistRepository()
+    );
   }
 
   static getAllProductsUseCase() {

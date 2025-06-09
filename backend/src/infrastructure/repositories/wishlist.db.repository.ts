@@ -27,9 +27,20 @@ export class WishlistDbRepository implements IWhishlistRepository {
       user: userObjectId,
     }).populate({
       path: "products",
-      select: "title variants",
+      select: "_id title variants images",
     });
 
     return wishlist ? wishlist.products : [];
+  }
+
+  async getWishlistProductById(
+    productId: string,
+    userId: string
+  ): Promise<boolean> {
+    const wishlist = await WishlistModel.findOne({
+      user: userId,
+      products: { $in: [productId] },
+    });
+    return wishlist ? true : false;
   }
 }

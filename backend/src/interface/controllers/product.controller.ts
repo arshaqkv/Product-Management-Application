@@ -57,8 +57,10 @@ class ProductController {
   async getProduct(req: Request, res: Response, next: NextFunction) {
     const { id } = req.params;
     try {
-      const product = await ProductDIContainer.getAProductUseCase().execute(id);
-      res.status(HttpStatus.OK).json(product);
+      const { id: userId } = req.user;
+      const { product, isWishlisted } =
+        await ProductDIContainer.getAProductUseCase().execute(id, userId);
+      res.status(HttpStatus.OK).json({ product, isWishlisted });
     } catch (error) {
       next(error);
     }

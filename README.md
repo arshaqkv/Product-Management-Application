@@ -36,7 +36,7 @@ A full-featured **Product Management System** built with **Node.js**, **React**,
 | Backend      | Node.js, Express, TypeScript            |
 | Architecture | Clean Architecture                      |
 | Auth         | Sessions + bcrypt                       |
-| Database     | MySQL (via Sequelize ORM)               |
+| Database     | MongoDB               |
 | Deployment   | Frontend - Vercel, Backend - Render     |
 
 ---

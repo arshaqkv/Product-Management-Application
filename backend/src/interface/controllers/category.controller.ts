@@ -27,6 +27,16 @@ class CategoryController {
       next(error);
     }
   }
+
+  async getCategories(req: Request, res: Response, next: NextFunction) {
+    try {
+      const categories =
+        await CategoryDIContainer.getCategoriesUseCase().execute();
+      res.status(HttpStatus.OK).json(categories);
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 const categoryController = new CategoryController();

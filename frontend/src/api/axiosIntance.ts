@@ -26,6 +26,7 @@ axiosInstance.interceptors.response.use(
       originalRequest._retry = true;
 
       try {
+        localStorage.removeItem("isLoggedin")
         window.location.href = "/login";
       } catch (refreshError) {
         return Promise.reject(refreshError);

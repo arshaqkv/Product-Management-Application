@@ -2,6 +2,7 @@ import express, { Application, Request, Response } from "express";
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import path from 'path'
 import { config } from "../config/config";
 import { connectDB } from "../infrastructure/database/db";
 import { errorHandler } from "../interface/middlewares/error.middleware";
@@ -12,6 +13,8 @@ import productRoutes from "../interface/routes/product.routes";
 
 const app: Application = express();
 const PORT = config.PORT;
+
+app.use(express.static(path.join(__dirname, '../uploads')));
 
 //middlewares
 app.use(express.json());

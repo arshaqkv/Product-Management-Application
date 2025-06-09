@@ -5,8 +5,10 @@ import { WishlistDIContainer } from "../../infrastructure/DI/WishlistDIContainer
 
 class ProductController {
   async createProduct(req: Request, res: Response, next: NextFunction) {
-    const { title, subCategory, description, variants } = req.body;
-
+    let { title, subCategory, description, variants } = req.body;
+    if (typeof variants === "string") {
+      variants = JSON.parse(variants);
+    }
     try {
       const files = req.files as Express.Multer.File[];
       const images = files?.map((file) => file.filename) ?? [];
@@ -27,13 +29,22 @@ class ProductController {
 
   async editProduct(req: Request, res: Response, next: NextFunction) {
     const { id } = req.params;
+    let { variants, existingImages } = req.body;
     try {
+      if (typeof variants === "string") {
+        variants = JSON.parse(variants);
+      }
       const files = req.files as Express.Multer.File[];
       const images = files ? files.map((file) => file.filename) : undefined;
-      await ProductDIContainer.getEditProductUseCase().execute(id, {
-        ...req.body,
-        images,
-      });
+      await ProductDIContainer.getEditProductUseCase().execute(
+        id,
+        {
+          ...req.body,
+          variants,
+          images,
+        },
+        existingImages
+      );
 
       res
         .status(HttpStatus.OK)

@@ -8,7 +8,11 @@ import path from "path";
 export class EditProduct {
   constructor(private productRepository: IProductRepository) {}
 
-  async execute(id: string, data: Partial<Product>): Promise<void> {
+  async execute(
+    id: string,
+    data: Partial<Product>,
+    existingImages: string
+  ): Promise<void> {
     const { title, images } = data;
     const product = await this.productRepository.findProductById(id);
 
@@ -27,14 +31,17 @@ export class EditProduct {
         HttpStatus.BAD_REQUEST
       );
     }
-
-    if (images) {
+ 
+    if (images && images.length !== 0) {
       product.images.map((image) => {
         const filePath = path.join("src/uploads", image);
         if (fs.existsSync(filePath)) {
           fs.unlinkSync(filePath);
         }
       });
+    }
+    if (images?.length === 0) {
+      data.images = JSON.parse(existingImages);
     }
 
     await this.productRepository.editProduct(id, data);

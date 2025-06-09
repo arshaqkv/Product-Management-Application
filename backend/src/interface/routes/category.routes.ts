@@ -4,7 +4,10 @@ import { isAuthenticated } from "../middlewares/auth.middleware";
 
 const router = Router();
 
-router.post("/", isAuthenticated, categoryController.createCategory);
-router.post("/sub-category", isAuthenticated, categoryController.createSubCategory)
+router.use(isAuthenticated);
+
+router.post("/", categoryController.createCategory);
+router.post("/sub-category", categoryController.createSubCategory);
+router.get("/", categoryController.getCategories);
 
 export default router;

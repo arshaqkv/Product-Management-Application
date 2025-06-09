@@ -9,8 +9,8 @@ class AuthController {
     const { name, email, password } = req.body;
     try {
       const signup = AuthDIContainer.getSignupUseCase();
-      const user = await signup.execute({ name, email, password });
-      res.status(HttpStatus.CREATED).json({ success: true, user });
+      await signup.execute({ name, email, password });
+      res.status(HttpStatus.CREATED).json({ message: "User registered" });
     } catch (error) {
       next(error);
     }

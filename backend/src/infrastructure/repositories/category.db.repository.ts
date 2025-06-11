@@ -19,7 +19,7 @@ export class CategoryDbRepository implements ICategoryRepository {
       categories.map(async (category) => {
         const subCategories = await SubCategoryModel.find({
           category: category._id,
-        }).lean();
+        }).select("name").lean();
 
         return {
           _id: category._id,

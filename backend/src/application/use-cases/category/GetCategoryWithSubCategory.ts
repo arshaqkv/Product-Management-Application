@@ -6,7 +6,6 @@ export class GetCategoriesWithSubCategories {
   async execute(): Promise<any> {
     const categories =
       await this.categoryRepository.getCategoriesWithSubCategories();
-
     return categories;
   }
 }

@@ -43,7 +43,8 @@ const AddProductDialog: React.FC<AddProductDialogProps> = ({
       setSubcategories(result);
     };
     fetchSubCategories();
-  }, []);
+  }, [onAddSuccess]);
+
   const handleAddVariant = () => {
     setVariants([...variants, { ram: "", price: "", quantity: 1 }]);
   };
@@ -112,7 +113,18 @@ const AddProductDialog: React.FC<AddProductDialogProps> = ({
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog
+      open={open}
+      onOpenChange={(isOpen) => {
+        setOpen(isOpen);
+        if (!isOpen) {
+          setTitle("");
+          setDescription("");
+          setImages([]);
+          setVariants([{ ram: "", price: "", quantity: 1 }]);
+        }
+      }}
+    >
       <DialogTrigger asChild>
         <Button className="bg-amber-500 rounded-xl hover:bg-amber-400 cursor-pointer">
           Add product

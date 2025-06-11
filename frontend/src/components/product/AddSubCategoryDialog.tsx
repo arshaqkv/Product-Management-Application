@@ -41,7 +41,7 @@ const AddSubcategoryDialog: React.FC<AddSubcategoryDialogProps> = ({
       }
     };
     fetchCategories();
-  }, []);
+  }, [onAddSuccess]);
 
   const handleSubmit = async () => {
     try {
@@ -51,7 +51,7 @@ const AddSubcategoryDialog: React.FC<AddSubcategoryDialogProps> = ({
       }
       const response = await axios.post("/category/sub-category", {
         name: subcategory,
-        category: categoryId,
+        categoryId: categoryId,
       });
       setSubcategory("");
       setCategoryId("");
@@ -66,7 +66,15 @@ const AddSubcategoryDialog: React.FC<AddSubcategoryDialogProps> = ({
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog
+      open={open}
+      onOpenChange={(isOpen) => {
+        setOpen(isOpen);
+        if (!isOpen) {
+          setSubcategory("");
+        }
+      }}
+    >
       <DialogTrigger asChild>
         <Button className="bg-amber-500 rounded-xl hover:bg-amber-400 cursor-pointer">
           Add sub category

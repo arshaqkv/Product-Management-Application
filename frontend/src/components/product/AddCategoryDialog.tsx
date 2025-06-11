@@ -20,6 +20,7 @@ const AddCategoryDialog: React.FC<AddCategoryDialogProps> = ({
 }) => {
   const [category, setCategory] = useState("");
   const [open, setOpen] = useState(false);
+
   const handleSubmit = async () => {
     try {
       if (category === "") {
@@ -38,7 +39,13 @@ const AddCategoryDialog: React.FC<AddCategoryDialogProps> = ({
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog
+      open={open}
+      onOpenChange={(isOpen) => {
+        setOpen(isOpen);
+        if (!isOpen) setCategory(""); // Clear input on close
+      }}
+    >
       <DialogTrigger asChild>
         <Button className="bg-amber-500 rounded-xl hover:bg-amber-400 cursor-pointer">
           Add category
